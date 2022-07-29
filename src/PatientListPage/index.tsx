@@ -1,20 +1,28 @@
 import React from "react";
 import axios from "axios";
-import { Box, Table, Button, TableHead, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
-import AddPatientModal from "../AddPatientModal";
-import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
-import HealthRatingBar from "../components/HealthRatingBar";
+import { Patient } from "../types";
+import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import { useStateValue } from "../state";
-import { TableCell } from "@material-ui/core";
-import { TableRow } from "@material-ui/core";
-import { TableBody } from "@material-ui/core";
+import AddPatientModal from "../AddPatientModal";
+
+import { 
+  Box, 
+  Table, 
+  Button, 
+  TableHead, 
+  Typography, 
+  TableBody, 
+  TableCell, 
+  TableRow
+} from "@material-ui/core";
+import HealthRatingBar from "../components/HealthRatingBar";
 
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
-
+  
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
 
@@ -63,7 +71,11 @@ const PatientListPage = () => {
         <TableBody>
           {Object.values(patients).map((patient: Patient) => (
             <TableRow key={patient.id}>
-              <TableCell>{patient.name}</TableCell>
+              <TableCell>
+                <Link to={`/patients/${patient.id}`}>
+                  {patient.name}
+                </Link>
+              </TableCell>
               <TableCell>{patient.gender}</TableCell>
               <TableCell>{patient.occupation}</TableCell>
               <TableCell>
